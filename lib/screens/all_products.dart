@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_api/api/api_service.dart';
 import 'package:flutter_api/models/product_model.dart';
+import 'package:flutter_api/screens/add_product.dart';
 import 'package:flutter_api/screens/single_product.dart';
 
 class AllProducts extends StatefulWidget {
@@ -18,11 +19,23 @@ class _AllProductsState extends State<AllProducts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All Products'),
+        title: const Text('All Products'),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+            context,
+             MaterialPageRoute(
+              builder:(context) =>const AddProduct(),
+            ));
+        },
+        child: const Icon(Icons.add),
+       
       ),
 
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: FutureBuilder<List<Product>>(
           future: apiService.fetchAllProducts(),
           builder: (context, snapshot){
@@ -50,7 +63,7 @@ class _AllProductsState extends State<AllProducts> {
                   Product product = snapshot.data![index];
 
                   return Container(
-                    margin: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.grey[200],

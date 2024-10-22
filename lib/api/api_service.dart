@@ -49,4 +49,36 @@ class ApiService {
   }
 
 
+      // Add a new product to the API
+     
+     Future<Product> addProduct(Product product) async {
+       const String url = 'https://fakestoreapi.com/products';
+
+       try{
+         final response = await http.post(
+           Uri.parse(url),
+           headers:{'Content-Type': 'application/json'},
+           body: json.encode(product.toJson()),
+         );
+
+         print("response status code: ${response.statusCode}");
+
+         if(response.statusCode == 201 || response.statusCode == 200){
+          print("response:${response.body}");
+           Product newProduct = Product.fromJson(json.decode(response.body));
+           return newProduct;
+         } else{
+
+           print("Failed to add product. Status code: ${response.statusCode}");
+           print("Response body: ${response.body}");
+           throw Exception("Failed to add product");
+         }
+       } catch (error){
+         print("Error: $error");
+         throw Exception("Failed to add product");
+       }
+     }
+  
+
+
 }
